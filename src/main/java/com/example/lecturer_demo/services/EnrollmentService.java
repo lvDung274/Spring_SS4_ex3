@@ -39,15 +39,19 @@ public class EnrollmentService {
     }
 
     public StudentEnrollment createEnrollment(StudentEnrollment enrollment) {
-        return enrollmentRepository.create(enrollment);
+        return enrollmentRepository.save(enrollment);
     }
 
-    public StudentEnrollment updateEnrollment(long id, StudentEnrollment enrollment) {
-        return enrollmentRepository.update(id, enrollment);
+    public StudentEnrollment updateEnrollment(long id, StudentEnrollment enrollmentDetails) {
+        StudentEnrollment existing = enrollmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy thông tin đăng ký"));
+        existing.setStudent(enrollmentDetails.getStudent());
+        existing.setCourse(enrollmentDetails.getCourse());
+        return enrollmentRepository.save(existing);
     }
 
-    public StudentEnrollment deleteEnrollmentById(long id) {
-        return enrollmentRepository.deleteById(id);
+    public void deleteEnrollmentById(long id) {
+        enrollmentRepository.deleteById(id);
     }
 
     public EnrollmentDetail enrollCourse(EnrollCourseRequest request) {
@@ -70,7 +74,7 @@ public class EnrollmentService {
                 .course(course)
                 .build();
 
-        enrollmentRepository.create(newEnrollment);
+        enrollmentRepository.save(newEnrollment);
 
         // 5. Trả về thông tin chi tiết (lấy tên sinh viên thông qua đối tượng student)
         return new EnrollmentDetail(newEnrollment.getId(), student.getName(), course);

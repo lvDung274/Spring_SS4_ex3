@@ -71,10 +71,10 @@ public class InstructorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Instructor>> deleteInstructorById(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteInstructorById(@PathVariable Long id) {
         try {
-            Instructor deleted = instructorService.deleteInstructorById(id);
-            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa ok", deleted));
+            instructorService.deleteInstructorById(id);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa giảng viên thành công", null));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
         }

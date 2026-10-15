@@ -72,10 +72,11 @@ public class EnrollmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<StudentEnrollment>> deleteEnrollmentById(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteEnrollment(@PathVariable Long id) {
         try {
-            StudentEnrollment deleted = enrollmentService.deleteEnrollmentById(id);
-            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa ok", deleted));
+            // Không gán vào biến StudentEnrollment nữa vì hàm trả về void
+            enrollmentService.deleteEnrollmentById(id);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa thông tin đăng ký thành công", null));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
         }

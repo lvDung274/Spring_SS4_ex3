@@ -62,10 +62,10 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Course>> deleteCourseById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteCourseById(@PathVariable Long id) {
         try {
-            Course deleted = courseService.deleteCourseById(id);
-            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa thành công", deleted));
+            courseService.deleteCourseById(id);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Xóa thành công khóa học", null));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
         }
