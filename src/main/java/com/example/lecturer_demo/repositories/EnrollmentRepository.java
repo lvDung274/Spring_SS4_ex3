@@ -1,7 +1,8 @@
 package com.example.lecturer_demo.repositories;
 
 import com.example.lecturer_demo.models.Course;
-import com.example.lecturer_demo.models.Enrollment;
+import com.example.lecturer_demo.models.Student;
+import com.example.lecturer_demo.models.StudentEnrollment;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,34 +12,42 @@ import java.util.Optional;
 
 @Repository
 public class EnrollmentRepository {
-    List<Enrollment> enrollments = new ArrayList<>(
-            Arrays.asList(
-                    new Enrollment(1001L, "Lê Văn Nam", 101L),
-                    new Enrollment(1002L, "Phạm Thị Hoa", 102L)
-            )
-    );
-    public List<Enrollment> findAll() {
+        List<StudentEnrollment> enrollments = new ArrayList<>(
+                Arrays.asList(
+                        StudentEnrollment.builder()
+                                .id(1001L)
+                                .student(Student.builder().id(1L).name("Lê Văn Nam").build())
+                                .course(Course.builder().id(101L).title("Lập trình Java cơ bản").build())
+                                .build(),
+                        StudentEnrollment.builder()
+                                .id(1002L)
+                                .student(Student.builder().id(2L).name("Phạm Thị Hoa").build())
+                                .course(Course.builder().id(102L).title("Spring Boot từ A-Z").build())
+                                .build()
+                )
+        );
+    public List<StudentEnrollment> findAll() {
         return enrollments;
     }
-    public Optional<Enrollment> findById(long id) {
+    public Optional<StudentEnrollment> findById(long id) {
         return enrollments.stream().filter(e -> e.getId().equals(id)).findFirst();
     }
 
-    public Enrollment create(Enrollment enrollment) {
+    public StudentEnrollment create(StudentEnrollment enrollment) {
         enrollments.add(enrollment);
         return enrollment;
     }
 
-    public Enrollment update(long id, Enrollment updatedEnrollment) {
-        Enrollment existing = findById(id)
+    public StudentEnrollment update(long id, StudentEnrollment updatedEnrollment) {
+        StudentEnrollment existing = findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thông tin đăng ký"));
-        existing.setStudentName(updatedEnrollment.getStudentName());
-        existing.setCourseId(updatedEnrollment.getCourseId());
+        existing.setStudent(updatedEnrollment.getStudent());
+        existing.setCourse(updatedEnrollment.getCourse());
         return existing;
     }
 
-    public Enrollment deleteById(long id) {
-        Enrollment existing = findById(id)
+    public StudentEnrollment deleteById(long id) {
+        StudentEnrollment existing = findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thông tin đăng ký"));
         enrollments.remove(existing);
         return existing;

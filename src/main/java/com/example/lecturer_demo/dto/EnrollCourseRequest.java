@@ -1,8 +1,11 @@
 package com.example.lecturer_demo.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class EnrollCourseRequest {
     private Long id;
     private String studentName;

@@ -3,7 +3,7 @@ package com.example.lecturer_demo.controllers;
 import com.example.lecturer_demo.dto.ApiResponse;
 import com.example.lecturer_demo.dto.EnrollCourseRequest;
 import com.example.lecturer_demo.dto.EnrollmentDetail;
-import com.example.lecturer_demo.models.Enrollment;
+import com.example.lecturer_demo.models.StudentEnrollment;
 import com.example.lecturer_demo.services.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,9 @@ public class EnrollmentController {
         this.enrollmentService = enrollmentService;
     }
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Enrollment>>> getAllEnrollments() {
+    public ResponseEntity<ApiResponse<List<StudentEnrollment>>> getAllEnrollments() {
         try {
-            List<Enrollment> enrollments = enrollmentService.getAllEnrollments();
+            List<StudentEnrollment> enrollments = enrollmentService.getAllEnrollments();
             return ResponseEntity.ok(new ApiResponse<>(true, "Đã truy xuất thành công", enrollments));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
@@ -31,9 +31,9 @@ public class EnrollmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Enrollment>> getEnrollmentById(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<StudentEnrollment>> getEnrollmentById(@PathVariable long id) {
         try {
-            Enrollment enrollment = enrollmentService.getEnrollmentById(id);
+            StudentEnrollment enrollment = enrollmentService.getEnrollmentById(id);
             return ResponseEntity.ok(new ApiResponse<>(true, "Đã truy xuất thành công", enrollment));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
@@ -41,9 +41,9 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Enrollment>> createEnrollment(@RequestBody Enrollment enrollment) {
+    public ResponseEntity<ApiResponse<StudentEnrollment>> createEnrollment(@RequestBody StudentEnrollment enrollment) {
         try {
-            Enrollment created = enrollmentService.createEnrollment(enrollment);
+            StudentEnrollment created = enrollmentService.createEnrollment(enrollment);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse<>(true, "Đã tạo thanhf công", created));
         } catch (RuntimeException e) {
@@ -62,9 +62,9 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Enrollment>> updateEnrollment(@PathVariable long id, @RequestBody Enrollment enrollment) {
+    public ResponseEntity<ApiResponse<StudentEnrollment>> updateEnrollment(@PathVariable long id, @RequestBody StudentEnrollment enrollment) {
         try {
-            Enrollment updated = enrollmentService.updateEnrollment(id, enrollment);
+            StudentEnrollment updated = enrollmentService.updateEnrollment(id, enrollment);
             return ResponseEntity.ok(new ApiResponse<>(true, "Cập nhập ok", updated));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));
@@ -72,9 +72,9 @@ public class EnrollmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Enrollment>> deleteEnrollmentById(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<StudentEnrollment>> deleteEnrollmentById(@PathVariable long id) {
         try {
-            Enrollment deleted = enrollmentService.deleteEnrollmentById(id);
+            StudentEnrollment deleted = enrollmentService.deleteEnrollmentById(id);
             return ResponseEntity.ok(new ApiResponse<>(true, "Xóa ok", deleted));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(ApiResponse.error(e.getMessage()));

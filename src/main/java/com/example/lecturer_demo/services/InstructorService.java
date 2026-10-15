@@ -52,10 +52,10 @@ public class InstructorService {
 
         return instructors.stream().map(instructor -> {
             List<Course> filteredCourses = allCourses.stream()
-                    .filter(course -> course.getInstructorId().equals(instructor.getId()))
+                    .filter(course -> course.getInstructor() != null && course.getInstructor().getId().equals(instructor.getId()))
                     .filter(course -> "ACTIVE".equalsIgnoreCase(course.getStatus().name()))
                     .filter(course -> allEnrollments.stream()
-                    .anyMatch(enrollment -> enrollment.getCourseId().equals(course.getId())))
+                            .anyMatch(enrollment -> enrollment.getCourse().getId().equals(course.getId()))) // Thêm dấu đóng ngoặc cho anyMatch và filter ở đây
                     .collect(Collectors.toList());
 
             return new InstructorDetailResponse(

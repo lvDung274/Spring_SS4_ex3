@@ -3,6 +3,8 @@ package com.example.lecturer_demo.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "instructors", schema = "public")
 @Builder
@@ -20,4 +22,7 @@ public class Instructor {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "instructor")
+    List<Course> courses;
 }

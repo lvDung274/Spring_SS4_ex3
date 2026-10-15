@@ -12,9 +12,10 @@ import java.util.Optional;
 public class InstructorRepository {
     List<Instructor>  instructors = new ArrayList<>(
             Arrays.asList(
-                    new Instructor(1L, "Nguyễn Văn A", "a.nguyen@example.com"),
-                    new Instructor(2L, "Trần Thị B", "b.tran@example.com"),
-                    new Instructor(3L, "Nguyễn Văn c", "uc.nguyen@example.com")
+                    Instructor.builder().id(1L).name("Nguyễn Văn A").email("a.nguyen@example.com").build(),
+                    Instructor.builder().id(2L).name("Trần Thị B").email("b.tran@example.com").build(),
+                    Instructor.builder().id(3L).name("Nguyễn Văn c").email("uc.nguyen@example.com").build()
+
             )
     );
     public List<Instructor> findAll() {

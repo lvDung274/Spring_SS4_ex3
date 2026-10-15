@@ -3,6 +3,8 @@ package com.example.lecturer_demo.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,6 +25,10 @@ public class Course {
     private CourseStatus status; //Đổi kiểu từ String sang CourseStatus
 
 
-    @Column( nullable = false)
-    private Long instructorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentEnrollment> enrollments;
 }
